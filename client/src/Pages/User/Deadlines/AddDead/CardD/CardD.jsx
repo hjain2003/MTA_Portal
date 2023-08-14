@@ -2,18 +2,23 @@ import React, { useState } from 'react';
 import './CardD.css';
 import DropdownAdd from '../../../../../Components/DropDownPop/DropDownAdd';
 import { useNavigate } from 'react-router-dom';
-import { useEditContext } from '../../../../../EditContext';
+// import { useEditContext } from '../../../../../EditContext';
 
 const CardD = () => {
     const navigate = useNavigate();
-    const { userData, setUserData } = useEditContext();
+    // const { userData, setUserData } = useEditContext();
     const [title, setTitle] = useState('');
     const [clickedButton, setClickedButton] = useState('subgroup');
     const [date, setDate] = useState(''); // State to store the selected date
     const [description, setDescription] = useState(''); // State to store the more info text
     const [submitText, setSubmitText] = useState('Submit');
 
-    
+    const name = localStorage.getItem('name');
+    const role = localStorage.getItem('role');
+    const subgroup = localStorage.getItem('subgroup');
+    const group = localStorage.getItem('group');
+    const email = localStorage.getItem('email');
+
     const token = localStorage.getItem("jwtoken");
     const handleClickSubD = async () => {
         setSubmitText('Processing ...');
@@ -22,7 +27,7 @@ const CardD = () => {
             if (!title || !date || !description) {
                 window.alert('Please fill in all the details.');
                 return;
-              }
+            }
             const requestData = {
                 title,
                 date,
@@ -92,14 +97,14 @@ const CardD = () => {
         setDescription(event.target.value);
     };
 
-    const dropdownItems = ['Probability & Statistics', 'Machine Learning', 'Software Engineering', 'Computer Architecture & Org.', 'Network Programming','Elective'];
+    const dropdownItems = ['Probability & Statistics', 'Machine Learning', 'Software Engineering', 'Computer Architecture & Org.', 'Network Programming', 'Elective'];
 
     const handleTextareaKeyPress = (event) => {
         if (event.key === 'Enter' && !event.shiftKey) {
-          event.preventDefault();
-          handleClickSubD ();
+            event.preventDefault();
+            handleClickSubD();
         }
-      };
+    };
 
     return (
         <div className='full'>
@@ -120,13 +125,13 @@ const CardD = () => {
                     className={`sec-grp ${clickedButton === 'subgroup' ? 'active' : ''}`}
                     onClick={() => handleButtonClick('subgroup')}
                 >
-                    {userData.subgroup}
+                    {subgroup}
                 </button>
                 <button
                     className={`sec-grp ${clickedButton === 'group' ? 'active' : ''}`}
                     onClick={() => handleButtonClick('group')}
                 >
-                    {userData.group}
+                    {group}
                 </button>
             </div>
 

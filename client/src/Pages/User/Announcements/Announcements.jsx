@@ -3,13 +3,19 @@ import './Announcements.css';
 import SideNav from '../../../Components/Navbar/Navbar';
 import ACard from './ACard/ACard';
 import { useNavigate } from 'react-router-dom';
-import { useEditContext } from '../../../EditContext';
+// import { useEditContext } from '../../../EditContext';
 
 const Announcements = () => {
   const [allAnnouncements, setAllAnnouncements] = useState([]);
   const [selectedButton, setSelectedButton] = useState('');
   const [isLoading, setIsLoading] = useState(true);
-  const {userData, setUserData} = useEditContext();
+  // const {userData, setUserData} = useEditContext();
+
+  const name = localStorage.getItem('name');
+  const role = localStorage.getItem('role');
+  const subgroup = localStorage.getItem('subgroup');
+  const group = localStorage.getItem('group');
+  const email = localStorage.getItem('email');
 
   const token = localStorage.getItem('jwtoken');
   const navigate = useNavigate();
@@ -47,9 +53,9 @@ const Announcements = () => {
 
   const filteredAnnouncements = allAnnouncements.filter(item => {
     if (selectedButton === 'COE16') {
-      return item.subgroup === userData.subgroup;
+      return item.subgroup === subgroup;
     } else if (selectedButton === 'COE15-22') {
-      return item.group === userData.group;
+      return item.group === group;
     }
     return true; // No filtering for other cases
   }).sort((a, b) => new Date(b.date) - new Date(a.date)); // Reverse the array to show latest announcement first
@@ -68,13 +74,13 @@ const Announcements = () => {
             className={`butf ${selectedButton === 'COE16' ? 'active' : ''}`}
             onClick={() => handleButtonClick('COE16')}
           >
-            {userData.subgroup}
+            {subgroup}
           </div>
           <div
             className={`butf ${selectedButton === 'COE15-22' ? 'active' : ''}`}
             onClick={() => handleButtonClick('COE15-22')}
           >
-            {userData.group}
+            {group}
           </div>
         </div>
         {isLoading ? (

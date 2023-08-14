@@ -1,18 +1,24 @@
 import React, { useEffect, useState } from 'react';
 import './SmCard.css';
 import { useNavigate } from 'react-router-dom';
-import { useEditContext } from '../../../../EditContext';
+// import { useEditContext } from '../../../../EditContext';
 
 const SmCard = ({ id, subject, link, groupOrSubgroup }) => {
   const navigate = useNavigate();
-  const { userData } = useEditContext();
+  // const { userData } = useEditContext();
   const [isAdmin, setIsAdmin] = useState(false);
   const [isDeleted, setIsDeleted] = useState(false);
   const [isDeleting, setIsDeleting] = useState(false); // New state to track deletion process
 
-  useEffect(() => {
-    setIsAdmin(userData.role === 'admin');
-  }, [userData]);
+  const name = localStorage.getItem('name');
+  const role = localStorage.getItem('role');
+  const subgroup = localStorage.getItem('subgroup');
+  const group = localStorage.getItem('group');
+  const email = localStorage.getItem('email');
+
+  if(role == "admin"){
+    setIsAdmin(true);
+  }
 
   const fullLink = link.startsWith('http://') || link.startsWith('https://') ? link : `http://${link}`;
 

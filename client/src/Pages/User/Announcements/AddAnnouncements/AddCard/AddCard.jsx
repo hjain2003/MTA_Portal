@@ -1,24 +1,34 @@
 import React, { useState } from 'react'
 import './AddCard.css'
 import { useNavigate } from 'react-router-dom'
-import { useEditContext } from '../../../../../EditContext'
+// import { useEditContext } from '../../../../../EditContext'
 
 const AddCard = () => {
-    const { userData, setUserData } = useEditContext();
+    // const { userData, setUserData } = useEditContext();
     const [clickedButton, setClickedButton] = useState('subgroup');
     const [description, setDescription] = useState('');
     const [submitText, setSubmitText] = useState('Submit');
     const navigate = useNavigate();
 
+    const name = localStorage.getItem('name');
+    const role = localStorage.getItem('role');
+    const subgroup = localStorage.getItem('subgroup');
+    const group = localStorage.getItem('group');
+    const email = localStorage.getItem('email');
+
+    if (role == "admin") {
+        setIsAdmin(true);
+    }
+
     const token = localStorage.getItem("jwtoken");
-    const handleAnnSubmit = async(e) => {
+    const handleAnnSubmit = async (e) => {
         setSubmitText('Processing ...');
         try {
 
             if (!description) {
                 window.alert('Please fill in all the details.');
                 return;
-              }
+            }
             const requestData = {
                 description,
             };
@@ -54,7 +64,7 @@ const AddCard = () => {
                 setSubmitText('Submit');
             }
         } catch (error) {
-                navigate('/login');
+            navigate('/login');
             // Handle any error that may occur during the API call
             // console.error('Error submitting deadline:', error);
         }
@@ -70,10 +80,10 @@ const AddCard = () => {
 
     const handleTextareaKeyPress = (event) => {
         if (event.key === 'Enter' && !event.shiftKey) {
-          event.preventDefault();
-          handleAnnSubmit();
+            event.preventDefault();
+            handleAnnSubmit();
         }
-      };
+    };
 
     return (
         <div className='full'>
@@ -87,18 +97,18 @@ const AddCard = () => {
                 className={`sec-grp ${clickedButton === 'subgroup' ? 'active' : ''}`}
                 onClick={() => handleButtonClick('subgroup')}
             >
-                {userData.subgroup}
+                {subgroup}
             </button>
             <button
                 className={`sec-grp ${clickedButton === 'group' ? 'active' : ''}`}
                 onClick={() => handleButtonClick('group')}
             >
-                {userData.group}
+                {group}
             </button>
             <div className='title-a'>
                 Announcement
             </div>
-            <textarea className="an-detail" placeholder="Write an announcement here..." onChange={handleDescriptionChange}  onKeyDown={handleTextareaKeyPress}>
+            <textarea className="an-detail" placeholder="Write an announcement here..." onChange={handleDescriptionChange} onKeyDown={handleTextareaKeyPress}>
             </textarea>
             <div className='submiting'>
                 <p className='sub' onClick={handleAnnSubmit}>{submitText}</p>

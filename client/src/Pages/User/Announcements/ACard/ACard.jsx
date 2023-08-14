@@ -1,17 +1,23 @@
 import React, { useEffect, useState } from 'react';
 import './ACard.css';
-import { useEditContext } from '../../../../EditContext';
+// import { useEditContext } from '../../../../EditContext';
 
 const ACard = ({ id, date, description, groupOrSubgroup }) => {
-  const { userData, setUserData } = useEditContext();
+  // const { userData, setUserData } = useEditContext();
   const [isAdmin, setIsAdmin] = useState(false);
   const [deleteBtnText, setDeleteBtnText] = useState('Delete');
   const [showFullDescription, setShowFullDescription] = useState(false);
-  const [isDeleted, setIsDeleted] = useState(false); // New state to track deletion
+  const [isDeleted, setIsDeleted] = useState(false); // New state to track deletion4
 
-  useEffect(() => {
-    setIsAdmin(userData.role === 'admin');
-  }, [userData]);
+  const name = localStorage.getItem('name');
+  const role = localStorage.getItem('role');
+  const subgroup = localStorage.getItem('subgroup');
+  const group = localStorage.getItem('group');
+  const email = localStorage.getItem('email');
+
+  if(role == "admin"){
+    setIsAdmin(true);
+  }
 
   const handleDelete = async () => {
     const confirmed = window.confirm('Are you sure you want to delete this card?');

@@ -1,14 +1,24 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import './StudyAdd.css';
-import { useEditContext } from '../../../../../EditContext';
+// import { useEditContext } from '../../../../../EditContext';
 
 const StudyAddCard = () => {
-  const { userData, setUserData } = useEditContext();
+  // const { userData, setUserData } = useEditContext();
   const navigate = useNavigate();
   const [addBtn, setAddBtn] = useState('Add');
   const [inputData, setInputData] = useState({ subject: '', link: '' });
   const [selectedSection, setSelectedSection] = useState('subgroup'); // Default to subgroup selection
+
+  const name = localStorage.getItem('name');
+  const role = localStorage.getItem('role');
+  const subgroup = localStorage.getItem('subgroup');
+  const group = localStorage.getItem('group');
+  const email = localStorage.getItem('email');
+
+  if(role == "admin"){
+    setIsAdmin(true);
+  }
 
   const handleButtonClick = (section) => {
     setSelectedSection(section);
@@ -76,7 +86,7 @@ const StudyAddCard = () => {
               handleButtonClick('subgroup');
             }}
           >
-            {userData.subgroup}
+            {subgroup}
           </button>
           <button
             className={`sec-grp ${selectedSection === 'group' ? 'active' : ''}`}
@@ -85,7 +95,7 @@ const StudyAddCard = () => {
               handleButtonClick('group');
             }}
           >
-            {userData.group}
+            {group}
           </button>
         </div>
 

@@ -4,24 +4,31 @@ import { NavLink } from 'react-router-dom';
 import { PiBooksDuotone } from 'react-icons/pi';
 import { TiThMenuOutline } from 'react-icons/ti';
 import { TfiAnnouncement } from 'react-icons/tfi';
-import { BsFillPlusSquareFill} from 'react-icons/bs';
+import { BsFillPlusSquareFill } from 'react-icons/bs';
 import { LiaStopwatchSolid, LiaCalendarSolid } from 'react-icons/lia';
 import { Link, useNavigate } from 'react-router-dom';
-import { useEditContext } from '../../EditContext';
+// import { useEditContext } from '../../EditContext';
 
 
-const SideNav = memo((props) => {
-  const {userData, setUserData} = useEditContext();
+const SideNav = (props) => {
+  // const {userData, setUserData} = useEditContext();
+  const [isAdmin, setIsAdmin] = useState(false);
   const navigate = useNavigate();
-  const {heading}=props;
+  const { heading } = props;
 
-// Check admin status
-  const { makeEdit, setMakeEdit } = useEditContext();
+  const name = localStorage.getItem('name');
+  const role = localStorage.getItem('role');
+  const subgroup = localStorage.getItem('subgroup');
+  const group = localStorage.getItem('group');
+  const email = localStorage.getItem('email');
+
+  if(role == "admin"){
+    setIsAdmin(true);
+  }
   
+  // Check admin status
+  const { makeEdit, setMakeEdit } = useEditContext();
 
-  const isAdmin = useMemo(() => {
-    return userData && userData.role === 'admin';
-  }, [userData]);
 
   const [showSidee, setShowSidee] = useState(false);
   const [windowWidth, setWindowWidth] = useState(window.innerWidth);
@@ -53,7 +60,7 @@ const SideNav = memo((props) => {
     }
   };
 
-  
+
   const token = localStorage.getItem("jwtoken");
 
   const handleLogout = async () => {
@@ -79,7 +86,7 @@ const SideNav = memo((props) => {
         }
       } catch (err) {
       }
-    } 
+    }
   };
 
 
@@ -94,76 +101,76 @@ const SideNav = memo((props) => {
           {/* <div className='dash'>DASHBOARD</div> */}
           <div className='person-info'>
             <p className='welc'>Welcome,</p>
-           
-              <>
-                <p className='name'>{userData.name}</p>
-                <p className='mail'>{userData.email}</p>
-              </>
-        
+
+            <>
+              <p className='name'>{name}</p>
+              <p className='mail'>{email}</p>
+            </>
+
             <p className='admin-mode'>
-              {isAdmin&&<p className='crgr'>CR/GR</p>}
-              {!isAdmin&&<p className='crgr'>STUDENT</p>}
-              {isAdmin&&!makeEdit&&<button className='edit' onClick={handleEditClick}>ADD INFO</button>}
-              {isAdmin&&makeEdit&&<button className='edit' onClick={handleExitClick}>EXIT</button>}
+              {isAdmin && <p className='crgr'>CR/GR</p>}
+              {!isAdmin && <p className='crgr'>STUDENT</p>}
+              {isAdmin && !makeEdit && <button className='edit' onClick={handleEditClick}>ADD INFO</button>}
+              {isAdmin && makeEdit && <button className='edit' onClick={handleExitClick}>EXIT</button>}
             </p>
           </div>
           <div className='links'>
             <Link to="/study">
               <div className='link'>
-              <div className={`focus ${(isActive('/study')||isActive('/add/study')) ? 'active-link' : ''}`}>
-                <PiBooksDuotone className='logo' />
-                &nbsp;Study Material
-              </div>                
+                <div className={`focus ${(isActive('/study') || isActive('/add/study')) ? 'active-link' : ''}`}>
+                  <PiBooksDuotone className='logo' />
+                  &nbsp;Study Material
+                </div>
                 {isAdmin && makeEdit &&
-                <Link to="/add/study">
-                  <BsFillPlusSquareFill className='addLogo'/> 
-                </Link>
-                }             
+                  <Link to="/add/study">
+                    <BsFillPlusSquareFill className='addLogo' />
+                  </Link>
+                }
               </div>
             </Link>
 
             <Link to="/announcements">
-            <div className='link'>
-                <div className={`focus ${(isActive('/announcements')||isActive('/add/announcements')) ? 'active-link' : ''}`}>
+              <div className='link'>
+                <div className={`focus ${(isActive('/announcements') || isActive('/add/announcements')) ? 'active-link' : ''}`}>
                   <TfiAnnouncement className='logo annlog' />
                   &nbsp;Announcements
                 </div>
-                  
-                  &nbsp;
-                  {isAdmin && makeEdit &&
+
+                &nbsp;
+                {isAdmin && makeEdit &&
                   <Link to="/add/announcements">
-                    <BsFillPlusSquareFill className='addLogo'/> 
+                    <BsFillPlusSquareFill className='addLogo' />
                   </Link>
-                  }
+                }
               </div>
             </Link>
 
             <Link to="/deadline">
-            <div className='link'>
-            <div className={`focus ${(isActive('/deadline')||isActive('/add/deadline')) ? 'active-link' : ''}`}>
-                <LiaStopwatchSolid className='logo' />
-                &nbsp;Deadlines
-              </div>
-                
+              <div className='link'>
+                <div className={`focus ${(isActive('/deadline') || isActive('/add/deadline')) ? 'active-link' : ''}`}>
+                  <LiaStopwatchSolid className='logo' />
+                  &nbsp;Deadlines
+                </div>
+
                 {isAdmin && makeEdit &&
-                <Link to="/add/deadline">
-                  <BsFillPlusSquareFill className='addLogo'/> 
-                </Link>
+                  <Link to="/add/deadline">
+                    <BsFillPlusSquareFill className='addLogo' />
+                  </Link>
                 }
               </div>
             </Link>
 
             <Link to="/impdates">
-            <div className='link'>
-              <div className={`focus ${(isActive('/impdates')||isActive('/add/impdates')) ? 'active-link' : ''}`}>
-                <LiaCalendarSolid className='logo' />
-                &nbsp;Evaluations
-              </div>
-            
+              <div className='link'>
+                <div className={`focus ${(isActive('/impdates') || isActive('/add/impdates')) ? 'active-link' : ''}`}>
+                  <LiaCalendarSolid className='logo' />
+                  &nbsp;Evaluations
+                </div>
+
                 {isAdmin && makeEdit &&
-                <Link to="/add/impdates">
-                  <BsFillPlusSquareFill className='addLogo'/> 
-                </Link>
+                  <Link to="/add/impdates">
+                    <BsFillPlusSquareFill className='addLogo' />
+                  </Link>
                 }
               </div>
             </Link>
@@ -173,10 +180,10 @@ const SideNav = memo((props) => {
 
           {/* <Link className="linkabt" to="/about"> */}
           <div className='foot'>
-            Made with ❤️ by <br/>Team  
+            Made with ❤️ by <br />Team
             <a className='lucky' target="_blank" rel="noopener" href='https://www.linkedin.com/in/lakshaya-aggarwal-9b958b228/'> L</a>
             <a className='grass' target="_blank" rel="noopener" href='https://www.linkedin.com/in/harsh--jain/'>H</a>
-            <a target="_blank" rel="noopener" href='https://www.linkedin.com/in/shreeyachatterji/'className='chatz'>S</a>
+            <a target="_blank" rel="noopener" href='https://www.linkedin.com/in/shreeyachatterji/' className='chatz'>S</a>
           </div>
           {/* </Link> */}
 
@@ -190,19 +197,19 @@ const SideNav = memo((props) => {
         </div>
         <button className='logout-btn' onClick={handleLogout}>
           Logout
-          </button>
+        </button>
       </div>
 
       <div className='pcHead'>
-      <div className='head'>
-        <p>{heading}</p>
-      </div>
+        <div className='head'>
+          <p>{heading}</p>
+        </div>
         <button className='logout-btn-pc' onClick={handleLogout}>
-            Logout
+          Logout
         </button>
       </div>
     </div>
   );
-});
+};
 
 export default SideNav;
