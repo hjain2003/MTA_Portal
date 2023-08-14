@@ -7,7 +7,7 @@ import { TfiAnnouncement } from 'react-icons/tfi';
 import { BsFillPlusSquareFill } from 'react-icons/bs';
 import { LiaStopwatchSolid, LiaCalendarSolid } from 'react-icons/lia';
 import { Link, useNavigate } from 'react-router-dom';
-// import { useEditContext } from '../../EditContext';
+import { useEditContext } from '../../EditContext';
 
 
 const SideNav = (props) => {
@@ -22,9 +22,6 @@ const SideNav = (props) => {
   const group = localStorage.getItem('group');
   const email = localStorage.getItem('email');
 
-  if(role == "admin"){
-    setIsAdmin(true);
-  }
   
   // Check admin status
   const { makeEdit, setMakeEdit } = useEditContext();
@@ -42,6 +39,11 @@ const SideNav = (props) => {
   };
 
   useEffect(() => {
+
+    if(role == "admin"){
+      setIsAdmin(true);
+    }
+
     const handleResize = () => {
       setWindowWidth(window.innerWidth);
     };

@@ -11,14 +11,17 @@ const SmCard = ({ id, subject, link, groupOrSubgroup }) => {
   const [isDeleting, setIsDeleting] = useState(false); // New state to track deletion process
 
   const name = localStorage.getItem('name');
-  const role = localStorage.getItem('role');
+  // const role = localStorage.getItem('role');
   const subgroup = localStorage.getItem('subgroup');
   const group = localStorage.getItem('group');
   const email = localStorage.getItem('email');
 
-  if(role == "admin"){
-    setIsAdmin(true);
-  }
+  useEffect(() => {
+    const role = localStorage.getItem('role');
+    if (role === 'admin') {
+      setIsAdmin(true);
+    }
+  }, []);
 
   const fullLink = link.startsWith('http://') || link.startsWith('https://') ? link : `http://${link}`;
 

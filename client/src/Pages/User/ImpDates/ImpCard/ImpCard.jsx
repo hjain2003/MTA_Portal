@@ -15,9 +15,12 @@ const ImpCard = ({ id, subject, date, time, venue, type, groupOrSubgroup }) => {
   const group = localStorage.getItem('group');
   const email = localStorage.getItem('email');
 
-  if(role == "admin"){
-    setIsAdmin(true);
-  }
+  useEffect(() => {
+    const role = localStorage.getItem('role');
+    if (role === 'admin') {
+      setIsAdmin(true);
+    }
+  }, []);
 
   const formatDate = (inputDate) => {
     const dateObj = new Date(inputDate);

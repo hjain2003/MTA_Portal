@@ -10,14 +10,17 @@ const ACard = ({ id, date, description, groupOrSubgroup }) => {
   const [isDeleted, setIsDeleted] = useState(false); // New state to track deletion4
 
   const name = localStorage.getItem('name');
-  const role = localStorage.getItem('role');
+  // const role = localStorage.getItem('role');
   const subgroup = localStorage.getItem('subgroup');
   const group = localStorage.getItem('group');
   const email = localStorage.getItem('email');
 
-  if(role == "admin"){
-    setIsAdmin(true);
-  }
+  useEffect(() => {
+    const role = localStorage.getItem('role');
+    if (role === 'admin') {
+      setIsAdmin(true);
+    }
+  }, []);
 
   const handleDelete = async () => {
     const confirmed = window.confirm('Are you sure you want to delete this card?');
