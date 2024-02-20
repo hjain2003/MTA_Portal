@@ -92,7 +92,7 @@ const CardD = () => {
         setDescription(event.target.value);
     };
 
-    const dropdownItems = ['Probability & Statistics', 'Machine Learning', 'Software Engineering', 'Computer Architecture & Org.', 'Network Programming','Elective'];
+    const dropdownItems = ['MicroPSD', 'Optimization Techniques', 'TOC', 'Innovation', 'Computer Graphics','Elective', 'Capstone'];
 
     const handleTextareaKeyPress = (event) => {
         if (event.key === 'Enter' && !event.shiftKey) {
