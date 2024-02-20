@@ -6,7 +6,7 @@ import Dropdown from './Dropdown/Dropdown';
 import { useNavigate } from 'react-router-dom';
 
 const Deadline = () => {
-  const dropdownItems = ['Probability & Statistics', 'Machine Learning', 'Software Engineering', 'Computer Architecture & Org.', 'Network Programming','Elective'];
+  const dropdownItems = ['MicroPSD', 'Optimization Techniques', 'TOC', 'Innovation', 'Computer Graphics','Elective', 'Capstone'];
   const navigate = useNavigate();
   const [selectedSubject, setSelectedSubject] = useState('All Subjects');
   const [allDeadlines, setAllDeadlines] = useState([]);
